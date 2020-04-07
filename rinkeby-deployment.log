@@ -1,0 +1,82 @@
+{
+  LaBoiteADons: "0xFfeBbE71Ada46D735943feb911De77d2b0b34EcF",
+  Admins: {
+    address: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0',
+    procedures: {
+      '0xA7431580dFd46A1D92BC558598dD9EA498de5cCe': '12',
+      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+    },
+    entries: [ '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8' ],
+    organData: {
+      owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
+      metadataIpfsHash: '0xdcdbd89c1f3ee5b6a46fa416e3dc311fdc77b52886d4fb7e115c01e57117840a',
+      metadataIpfsFunction: '18',
+      metadataIpfsSize: '32',
+      entriesCount: '1',
+      proceduresCount: '2'
+    },
+    metadata: 'QmdCnqSpih3iwt4wLTZSNDcbYCUd2Gwaf8XJU4q8FdemwP'
+  },
+  Moderators: {
+    address: '0x737C4A0CD82eb46E42517c529B2099BbaAd55037',
+    procedures: {
+      '0x547dAB208541a3775F4eb70EAdbb6F08dc4E384A': '12',
+      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+    },
+    entries: [ '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8' ],
+    organData: {
+      owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
+      metadataIpfsHash: '0xa673d240392bc9c8c191438217627366ff5f1a551652198e2f81396fcaa7281f',
+      metadataIpfsFunction: '18',
+      metadataIpfsSize: '32',
+      entriesCount: '1',
+      proceduresCount: '2'
+    },
+    metadata: 'QmZYQpXksxdQEGcmhevJsZYLv8c1reD41am7X9biHezVWe'
+  },
+  Causes: {
+    address: '0x6064D785351A5c2533559068574e9F9Bf5F1d1B3',
+    procedures: {
+      '0x4eD5F12B4535B63d377357A8952DfbDD99C2dF49': '12',
+      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+    },
+    entries: [
+      '0x7873953e61Fc86Ac8d712aD61E15A1CDa3EC2F3C',
+      '0x911D29F25a93d198f619a7E7e2849cE6CE7E3D99',
+      '0x5CD5Cb664E14756b85A4B90081b7447188aa598B',
+      '0xCC3113635Fdd9aE4EC87C56ad580150ae8BCD0A0',
+      '0xaB8A748a8EeA5737Eb5b6675D1a133aF6B82C6cB',
+      '0x34D64036De882e88F92e18f6bdb87f7Bfc4e522A',
+      '0x66d66aF1328d6793Eb805824b8D0491753BA2fa8'
+    ],
+    organData: {
+      owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
+      metadataIpfsHash: '0xbef43cbbb41181c119122821fb6a6e0679534c8917d99ddc212a196856189980',
+      metadataIpfsFunction: '18',
+      metadataIpfsSize: '32',
+      entriesCount: '7',
+      proceduresCount: '2'
+    },
+    metadata: 'QmbC4BCtbaXAnd9oj5o3emdWkqofgbbvCttSiNmDs6gAes'
+  },
+  CausesNomination: {
+    address: '0x4eD5F12B4535B63d377357A8952DfbDD99C2dF49',
+    metadata: 'QmbBgKU1uf93Qu9YpXEASUGF7AWEHmdaWgoFA3Kv1XQ8BQ',
+    authorizedNominatersOrgan: '0x737C4A0CD82eb46E42517c529B2099BbaAd55037'
+  },
+  ModeratorsNomination: {
+    address: '0x547dAB208541a3775F4eb70EAdbb6F08dc4E384A',
+    metadata: 'QmcYQhzKPn1WhG8HsHZCMkGVR1KWYUgWAGCba3M7cRSKYV',
+    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+  },
+  AdminsNomination: {
+    address: '0xA7431580dFd46A1D92BC558598dD9EA498de5cCe',
+    metadata: 'QmZZEryHvXHhtQRgtxZsFenmXcK78ahHpJvqZcbbeyCFzR',
+    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+  },
+  Upgrade: {
+    address: '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308',
+    metadata: 'QmP8VvpbK84aM8Yv8SEfH6qyQR56nNspbAzwpPDAmFYGRP',
+    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+  }
+}
