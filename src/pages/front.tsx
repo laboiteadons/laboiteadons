@@ -21,7 +21,7 @@ export const FrontPage = () => {
                         <p className="lead">
                             Now you can easily track and distribute your donations to multiple causes.<br/>
                             Transfers are cheap, instantaneous, highly secured and transparent on the <Link to="/about/blockchain">Ethereum Blockchain</Link>.<br/>
-                            The app <Link to="/about/governance">doesn't need any central authority</Link> and is <Link to="/about/hosting">resistant against tempering</Link>, so you can stay in total control of your data.
+                            The app <Link to="/about/governance">doesn't need any central authority</Link> and is <Link to="/about/hosting">resistant against tampering</Link>, so you can stay in total control of your data.
                         </p>
                     </Col>
                     <Col>

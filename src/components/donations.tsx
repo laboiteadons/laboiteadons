@@ -7,8 +7,8 @@ import { useDApp } from '../dapp'
 import './autosuggest.css'
 
 export const DonationInput: React.FC<{
-    sum: number,
-    setSum: (arg0: number) => void
+    sum: string,
+    setSum: (arg0: string) => void
 }> = React.memo(({ sum, setSum }) => (
     <div className="card">
         <div className="card-body">
@@ -16,7 +16,7 @@ export const DonationInput: React.FC<{
                 <div className="input-group">
                     <label>
                         Enter the amount to donate (ETH):
-                        <input name="sum" type="number" value={sum || ""} onChange={e => setSum(parseFloat(e.currentTarget.value))} className="form-control" />
+                        <input name="sum" type="text" value={sum} onChange={e => setSum(e.target.value)} className="form-control" />
                     </label>
                 </div>
             </div>
@@ -25,7 +25,6 @@ export const DonationInput: React.FC<{
 ))
 
 export const DistributionPie: React.FC<{ distribution: Slice[] }> = React.memo(({ distribution }) => {
-    console.log("distribution", distribution)
     if (distribution.length === 0)
         return <Pie data={{ datasets: [{ data: [100, 200, 300] }] }} legend={null} options={{
             animation: false,
@@ -41,10 +40,10 @@ export const DistributionPie: React.FC<{ distribution: Slice[] }> = React.memo((
             backgroundColor: distribution.map((s:Slice) => '#' + s.addr.substr(2, 6))
         }]
     }
-    return <Pie data={chartData} legend={null} options={{ animation: { duration: 250 } }} />
+    return <Pie data={chartData} legend={null} options={{ animation: { duration: 250 }, tooltips: { enabled: true } }} />
 })
 
-export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, list: Cause[] }> = React.memo(({ onSelect, list }) => {
+export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, list: Cause[] }> = ({ onSelect, list }) => {
     const [searchValue, setSearchValue] = React.useState<string>("")
     const [suggestions, setSuggestions] = React.useState<Cause[]>([])
     
@@ -63,7 +62,7 @@ export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, 
             getSuggestionValue={(s: Cause) => s.name}
             renderSuggestion={(s: Cause) => <div>{s.name}</div>}
             inputProps={{
-                placeholder: "Find by name",
+                placeholder: "Find a cause by name",
                 value: searchValue,
                 onChange: (e: any, d: Autosuggest.ChangeEvent) => setSearchValue(d.newValue)
             }}
@@ -73,34 +72,72 @@ export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, 
             }}
         />
     )
-})
+}
 
-export const DistributionSlices: React.FC<{distribution: Slice[], setDistribution: (d: Slice[]) => void}> = ({ distribution, setDistribution }) => {
+export const DistributionSliceItem: React.FC<{
+    slice: Slice,
+    removeSlice: () => void,
+    updateSlice: (shares: number) => void
+}> = ({ slice, removeSlice, updateSlice }) => {
+    const [shares, setShares] = React.useState(slice.shares)
     return (
+        <Row style={{ borderBottom: `2px solid #${slice.addr.substr(2, 6)}`}}>
+            <Col className="col-9">{slice.name}</Col>
+            <Col className="col-3">
+                <input type="text" style={{width: "3em"}} value={shares} onChange={
+                    (e: ChangeEvent<HTMLInputElement>) => {
+                        e.preventDefault()
+                        var _shares = parseInt(e.target.value)
+                        setShares(_shares)
+                        if (_shares > 0) updateSlice(_shares)
+                    }
+                } />
+                <span role="button" className="i-close" onClick={removeSlice}>&times;</span>
+            </Col>
+        </Row>
+    )
+}
+
+export const DistributionSlices: React.FC<{
+    distribution: Slice[],
+    setDistribution: (d: Slice[]) => void,
+    cloneLatestDonation: (()=>void)|null|undefined
+}> = ({ distribution, setDistribution, cloneLatestDonation }) => {
+    return distribution.length > 0 ? (
         <ul className="list-unstyled">
         {
-            distribution.map((slice: Slice, i: number) => (
-                <li key={i}>
-                    <Row style={{ borderBottom: `2px solid #${slice.addr.substr(2, 6)}`}}>
-                        <Col className="col-9">{slice.name}</Col>
-                        <Col className="col-3">
-                            <input type="number" style={{width: "3em"}} defaultValue={slice.shares} onBlur={
-                                (e: ChangeEvent<HTMLInputElement>) =>
-                                    setDistribution(distribution.map(s => s.addr === slice.addr ? {...s, shares: parseInt(e.target.value) } : s))
-                            } />
-                        </Col>
-                    </Row>
-                </li>
-            ))
+            distribution.map((slice: Slice, i: number) => {
+                return (
+                    <li key={slice.addr}>
+                        <DistributionSliceItem slice={slice}
+                            removeSlice={() => {
+                                var _distribution = distribution.filter(s => s.addr !== slice.addr)
+                                setDistribution(_distribution)
+                            }}
+                            updateSlice={(shares: number) => {
+                                setDistribution(distribution.map(s => s.addr === slice.addr ? {...s, shares } : s))
+                            }}
+                        />
+                    </li>
+                )
+            })
         }
         </ul>
+    ) : (
+        <>
+            <p>Start by adding causes to your distribution...</p>
+            {
+                cloneLatestDonation && <button className="btn btn-primary" onClick={cloneLatestDonation}>Or clone your latest donation</button>
+            }
+        </>
     )
 }
     
 export const DistributionInput: React.FC<{
     distribution: Slice[],
     setDistribution: (arg0: Slice[]) => void
-}> = ({ distribution, setDistribution }) => {
+    cloneLatestDistribution: (()=>void)|null|undefined
+}> = ({ distribution, setDistribution, cloneLatestDistribution }) => {
     const { causes } = useDApp()
     const onSelect = (c: Cause) => {
         setDistribution([...distribution, {
@@ -120,7 +157,7 @@ export const DistributionInput: React.FC<{
                 </div>
             </Col>
             <Col className="col-5">
-                <DistributionSlices distribution={distribution} setDistribution={setDistribution} />
+                <DistributionSlices distribution={distribution} setDistribution={setDistribution} cloneLatestDonation={cloneLatestDistribution} />
             </Col>
         </Row>
     )

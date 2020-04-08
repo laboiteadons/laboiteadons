@@ -1,10 +1,11 @@
 {
   "name": "laboiteadons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Track, distribute and repeat donations.",
   "private": true,
   "author": "alex <alex@laboiteadons.org>",
   "license": "MIT",
+  "homepage": ".",
   "dependencies": {
     "@truffle/contract": "^4.1.15",
     "bootstrap": "^4.4.1",

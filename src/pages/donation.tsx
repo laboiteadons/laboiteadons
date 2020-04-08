@@ -1,33 +1,26 @@
 import React from 'react'
 import { DonationInput, DistributionInput, DonationSuccessBox } from '../components/donations'
-import { useDApp } from '../dapp'
-import { Slice, Donation, Cause } from '../types'
+import { useDApp, DONATION_CONFIRMED } from '../dapp'
+import { Slice, Donation } from '../types'
 import { DAppStatusBox } from '../components/dapp'
-import { Alert } from 'reactstrap'
+import { Alert, Media, Row, Col } from 'reactstrap'
+import { useWeb3 } from '../ethereum'
 
 export const DonationPage = () => {
-    const { donate, causes, loading } = useDApp()
-    const [sum, setSum] = React.useState<number>(0.0)
+    const { networkId } = useWeb3()
+    const { donate, donations } = useDApp()
+    const [sum, setSum] = React.useState<string>("")
     const [distribution, setDistribution] = React.useState<Slice[]>([])
     const [donating, setDonating] = React.useState<boolean>(false)
     const [latestDonation, setLatestDonation] = React.useState<Donation|undefined>()
     const [error, setError] = React.useState<string>("")
-
-    // Init with default value.
-    const mounted = React.useRef<boolean>(false)
-    React.useEffect(() => {
-        if (!loading && !mounted.current) {
-            mounted.current = true
-            setDistribution(
-                causes.slice(0, 3).map((c: Cause) => ({
-                    name: c.name,
-                    addr: c.addr,
-                    shares: (Math.floor((Math.random() * 99)) * 10),
-                    causeCid: c.ipfsCid
-                }))
-            )
+    const donationsOnNetwork: Donation[] = donations.filter(d => d.networkId === networkId).reverse()
+    const cloneLatestDistribution: (()=>void)|null|undefined = donationsOnNetwork && donationsOnNetwork[0] ?
+        () => {
+            setDistribution(donationsOnNetwork[0].distribution)
+            setSum(window.web3.utils.fromWei(donationsOnNetwork[0].weiValue, 'ether'))
         }
-    }, [loading, causes])
+        : null
 
     return (
         <>
@@ -36,7 +29,7 @@ export const DonationPage = () => {
                 <div className="row">
                     <div className="col-10 offset-1">
                         <div className="my-3">
-                            <DistributionInput distribution={distribution} setDistribution={setDistribution} />
+                            <DistributionInput distribution={distribution} setDistribution={setDistribution} cloneLatestDistribution={cloneLatestDistribution} />
                         </div>
                         <DonationInput sum={sum} setSum={setSum} />
                         
@@ -48,9 +41,9 @@ export const DonationPage = () => {
                                         <button className="btn btn-primary" onClick={() => {
                                             setError("")
                                             setLatestDonation(undefined)
-                                            if (sum > 0) {
+                                            if (parseFloat(sum) > 0 && distribution.length > 0) {
                                                 setDonating(true)
-                                                donate(distribution, window.web3.utils.toWei(String(sum), 'ether').toString(16))
+                                                donate(distribution, window.web3.utils.toWei(sum, 'ether').toString(16))
                                                 .then((donation: Donation) => setLatestDonation(donation))
                                                 .catch(e => {
                                                     console.error(e)
@@ -77,6 +70,39 @@ export const DonationPage = () => {
                     </div>
                 </div>
             </div>
+            {
+                donationsOnNetwork.length > 0 && (
+                    <div>
+                        <h3>History of donations</h3>
+                        <div>
+                            {
+                                donationsOnNetwork.map((donation: Donation, i: number) => {
+                                    var totalShares = donation.distribution.reduce((total: number, slice: Slice) => total += slice.shares, 0)
+                                    return (
+                                        <Media key={i} className="py-4">
+                                            <div className="media-body">
+                                                <h5 className="mt-0">{new Date(donation.timestamp).toLocaleString()}</h5>
+                                                <strong>{window.web3.utils.fromWei(donation.weiValue, 'ether')} ETH</strong>
+                                                <ul className="list-unstyled">
+                                                    {donation.distribution.map((s:Slice, j:number) => (
+                                                        <li key={j}>
+                                                            <Row>
+                                                                <Col className="col-6">{s.name}</Col>
+                                                                <Col className="col-6">{Math.floor((s.shares / totalShares) * 1000000) / 10000.0} %</Col>
+                                                            </Row>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <a href={`https://rinkeby.etherscan.io/tx/${donation.transaction_hash}`} className={`btn btn-sm ${donation.status === DONATION_CONFIRMED ? "btn-success" : "btn-danger"}`}>Review on Etherscan</a>&nbsp;<button onClick={() => setDistribution(donation.distribution)} className="btn btn-sm btn-primary">Clone donation</button>
+                                            </div>
+                                        </Media>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                )
+            }
         </>
     )
 }

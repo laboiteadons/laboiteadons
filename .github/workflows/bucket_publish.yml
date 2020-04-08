@@ -6,7 +6,8 @@ on:
 jobs:
   bucket_publish:
     env:
-      BUCKET_NAME: 'laboiteadons-web'
+      BUCKET_NAME: 'laboiteadons-dapp'
+      GENERATE_SOURCEMAP: false
       CI: false
     runs-on: ubuntu-latest
     name: Create a Textile Bucket

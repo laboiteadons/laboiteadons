@@ -23,7 +23,7 @@ export const Web3Context = React.createContext<{
   accounts: string[],
   selectedAccount: string,
   network: string,
-  networkId: number,
+  networkId: string,
   balance: string,
   loading: boolean,
   connected: boolean
@@ -31,7 +31,7 @@ export const Web3Context = React.createContext<{
   accounts: [],
   selectedAccount: "",
   network: "",
-  networkId: 0,
+  networkId: "0",
   balance: "n/a",
   loading: false,
   connected: false
@@ -39,10 +39,10 @@ export const Web3Context = React.createContext<{
 
 type Web3ProviderProps = {
   children: React.ReactNode
-  onLogin?: (arg0: String) => void,
+  onLogin?: (arg0: string) => void,
   onLogout?: () => void,
-  onChangeAccount?: (arg0: String) => void,
-  onChangeNetwork?: (arg0: { network: String, networkId: Number }) => void
+  onChangeAccount?: (arg0: string) => void,
+  onChangeNetwork?: (arg0: { network: string, networkId: string }) => void
 }
 
 export const Web3Provider = (props: Web3ProviderProps) => {
@@ -56,10 +56,10 @@ export const Web3Provider = (props: Web3ProviderProps) => {
   const [balance, setBalance] = useState<string>("n/a")
   const [network, setNetwork] = useState<{
     name: string,
-    id: number
+    id: string
   }>({
     name: "",
-    id: 0
+    id: "0"
   })
   const [loading, setLoading] = useState<boolean>(true)
   const [connected, setConnected] = useState<boolean>(false)
@@ -109,7 +109,7 @@ export const Web3Provider = (props: Web3ProviderProps) => {
           if (onChangeNetwork)
             onChangeNetwork({
               network: _network,
-              networkId: netId
+              networkId: String(netId)
             })
           setNetwork({
             name: _network,
@@ -171,7 +171,7 @@ export const Web3Provider = (props: Web3ProviderProps) => {
       accounts: connected ? accounts.list : [],
       selectedAccount: connected ? accounts.selected : "",
       network: connected ? network.name : "",
-      networkId: connected ? network.id : 0,
+      networkId: connected ? network.id : "0",
       balance: connected ? balance : "n/a",
       loading,
       connected

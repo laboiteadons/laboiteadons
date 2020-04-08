@@ -6,6 +6,8 @@ import LaBoiteADons_Schema from './contracts/LaBoiteADons.json'
 import Organ_Schema from './contracts/Organ.json'
 import { Donation, Cause, Slice } from './types'
 
+export const DONATION_CONFIRMED = "confirmed"
+
 export const DAppContext = React.createContext<{
     donations: Donation[],
     causes: Cause[],
@@ -161,8 +163,8 @@ export const DAppProvider = (props: any) => {
             weiValue,
             timestamp: Date.now(),
             transaction_hash: result.tx,
-            networkId: String(networkId),
-            status: "confirmed",
+            networkId,
+            status: DONATION_CONFIRMED,
             resultData: JSON.stringify(result)
         }
 

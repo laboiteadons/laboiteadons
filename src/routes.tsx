@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { HashRouter, Switch, Route, Redirect, useLocation } from 'react-router-dom'
 import { Container } from 'reactstrap'
 import FrontPage from './pages/front'
 import AboutPage from './pages/about'
@@ -9,7 +9,7 @@ import DonationPage from './pages/donation'
 import CausesPage from './pages/causes'
 
 export const AppRouter = () => (
-    <BrowserRouter>
+    <HashRouter>
         <RouterFix />
         <div className="flex-shrink-0">
             <Header />
@@ -26,7 +26,7 @@ export const AppRouter = () => (
         <div className="footer mt-auto bg-dark text-primary">
             <Footer />
         </div>
-    </BrowserRouter>
+    </HashRouter>
 )
 
 export default AppRouter
