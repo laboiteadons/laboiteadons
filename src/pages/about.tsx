@@ -11,6 +11,7 @@ export const AboutPage = () => {
         <NavItem><NavLink to={`${path}/blockchain`} className="nav-link">Ethereum Blockchain</NavLink></NavItem>
         <NavItem><NavLink to={`${path}/hosting`} className="nav-link">IPFS Hosting</NavLink></NavItem>
         <NavItem><NavLink to={`${path}/governance`} className="nav-link">Organigr.am Governance</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/wallet`} className="nav-link">Getting a Wallet</NavLink></NavItem>
       </Nav>
       <div className="mt-5">
         <Switch>
@@ -18,6 +19,7 @@ export const AboutPage = () => {
           <Route exact path={`${path}/blockchain`} component={AboutEthereumPage} />
           <Route exact path={`${path}/hosting`} component={AboutIPFSPage} />
           <Route exact path={`${path}/governance`} component={AboutOrganigramPage} />
+          <Route exact path={`${path}/wallet`} component={AboutWalletPage} />
           <Route><Redirect to={`${path}/us`} /></Route>
         </Switch>
       </div>
@@ -171,6 +173,23 @@ export const AboutOrganigramPage = React.memo(() => (
     <p>
       Currently, the organisation has 2 other Organs : Moderators, who can add and remove causes, and Administrators, who can add and remove Moderators, and update the system.<br/>
       You can browse and interact with the Organs through their available procedures on any Organigr.am client, or <a href="https://ethereum.org" target="_blank" rel="noopener noreferrer">https://organigr.am/org/laboiteadons</a>.
+    </p>
+  </>
+))
+
+export const AboutWalletPage = React.memo(() => (
+  <>
+    <h2>Getting started with a Wallet</h2>
+    <p>Whether you decide to go with <a href="https://www.brave.com" target="_blank" rel="noreferrer noopener">Brave Browser</a> (we &lt;3 Brave) or the <a href="https://www.metamask.io" target="_blank" rel="noreferrer noopener">Metamask Browser Extension</a> for Chrome and Firefox, the steps to get started are very similar.</p>
+    <p>Once installed, go to the <strong>"Crypto Wallets" window</strong>  (by clicking on the metamask extension icon, or in your browser settings) and "create a new local wallet".</p>
+    <p>You will be directed to create your seed words. Follow the steps and <strong>backup your seed words</strong> by writing them down in a safe place, like a piece of paper, a password manager, an external drive in a vault... You will need your seed words to generate your private keys in case you lose access to your wallets. With your private keys, you can prove your identity on the Ethereum blockchain and transfer your funds.</p>
+    <p>You can then <strong>"create an account"</strong> or "import an account from a private key" to get an account dedicated to this application. We recommend creating an account for each service you use to avoid sharing your transactions history and making it easier for applications to create a profile of you.</p>
+    <p>By clicking on the "Network" name, you can <strong>switch to the Rinkeby Ethereum Test Network</strong>. There, only Test Ether are transferred and never real currencies.</p>
+    <p>You can get Test Ether in the <a href="https://faucet.rinkeby.io/" target="_blank" rel="noreferrer noopener">Rinkeby Authenticated Faucet</a>.</p>
+    <p>Congratulations! You now have your own Ethereum wallet. Keep it secure by <strong>never sharing your keys</strong>. Your wallet has a public address you can share and track on <a href="https://www.etherscan.io" target="_blank" rel="noreferrer noopener">Etherscan</a>.</p>
+    <p><a href="https://ethereum.org/wallets">Find out more about Ethereum wallets and how to use them.</a></p>
+    <p>
+      <Link to="/donate" className="btn btn-primary">Try the app</Link>
     </p>
   </>
 ))

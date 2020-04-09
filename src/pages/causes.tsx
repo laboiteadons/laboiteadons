@@ -1,13 +1,22 @@
 import React from 'react'
-import { useDApp } from '../dapp'
+import { Link } from 'react-router-dom'
 import { Nav, NavItem, CardBody, Row, Card, CardTitle, CardFooter, Container, CardText, Alert } from 'reactstrap'
+import { useDApp } from '../dapp'
+import { useWeb3 } from '../ethereum'
 
 export const CausesPage = () => {
-  const { causes, loading } = useDApp()
+  const { connected, loading: web3loading, networkId } = useWeb3()
+  const { causes, loading, availableNetworkIds } = useDApp()
   return (
     <Container>
       <h2>Causes</h2>
-      { loading && <Alert className="alert-info">Loading...</Alert>}
+      { (web3loading || loading) && <Alert className="alert-info">Loading...</Alert>}
+      { !loading && !connected && <Alert className="alert-danger">You are not connected to Ethereum. <Link to="/">Get started with an Ethereum wallet.</Link></Alert> }
+      { !loading && connected && !availableNetworkIds.find(i => i === networkId) && (
+        <div className="alert alert-warning">
+          You are not connected to the correct Ethereum network. Try switching to Rinkeby Ethereum Test Network in the Wallet window.
+        </div>
+      ) }
       <Row>
         {
           causes && causes.map((cause, i) => (

@@ -7,7 +7,7 @@ import { Alert, Media, Row, Col } from 'reactstrap'
 import { useWeb3 } from '../ethereum'
 
 export const DonationPage = () => {
-    const { networkId } = useWeb3()
+    const { networkId, selectedAccount } = useWeb3()
     const { donate, donations } = useDApp()
     const [sum, setSum] = React.useState<string>("")
     const [distribution, setDistribution] = React.useState<Slice[]>([])
@@ -24,8 +24,8 @@ export const DonationPage = () => {
 
     return (
         <>
-            <DAppStatusBox />
             <div className="my-3">
+                <DAppStatusBox />
                 <div className="row">
                     <div className="col-10 offset-1">
                         <div className="my-3">
@@ -39,6 +39,8 @@ export const DonationPage = () => {
                                     <Alert className="alert-info">Processing donation.... Please wait for confirmation.</Alert>
                                     : (
                                         <button className="btn btn-primary" onClick={() => {
+                                            if (!selectedAccount)
+                                                return setError("You need a wallet to process donations.")
                                             setError("")
                                             setLatestDonation(undefined)
                                             if (parseFloat(sum) > 0 && distribution.length > 0) {

@@ -33,7 +33,7 @@ For now, adding entries is done by the maintainer of the project on github. Late
 Current governance organigram is available at
 https://organigr.am/org/laboiteadons.
 
-## Contributions
+## Contributing
 Github contributions are welcome from everyone as Pull Requests. Feature requests can be sent as tickets on Github.
 
 ### TODO
@@ -81,10 +81,10 @@ migrate --reset
 # Starts React development server.
 yarn start
 
-# Ctrl+C will exit truffle console and the React server.
+# Ctrl+C will exit servers (you may need to do it twice).
 ```
 
-## Installation
+## Commands
 ```bash
 yarn install
 ```
@@ -99,45 +99,56 @@ Runs a local install of the app you can access at http://localhost:3000/.
 yarn ipfs
 ```
 Runs an IPFS node locally.  
-IPFS will store and make available our files for as long as they are pinned on a reachable node.  
+IPFS will store and make available your files for as long as they are pinned on a reachable node.  
 To keep your files available and close to your clients, consider using pinning services like [Pinata](https://pinata.cloud/), [Temporal](https://temporal.cloud/), [Eternum](https://www.eternum.io/), [Constellation FS](https://constellation-fs.org/) or [Textile](https://textile.io/).  
 You can also look at the upcoming [Filecoin](https://filecoin.io/) and [Textile Powergate](https://blog.textile.io/tag/powergate) projects as decentralized on-demand storage.
 
 ```bash
 yarn truffle develop
 ```
-Runs a local Ethereum network with Ganache, so you can try the app by connecting Metamask to http://localhost:9545 (with Network ID: 5777).
-The command will generate private keys you can add to Metamask to test your account.
-
+Runs a local Ethereum network with Ganache, so you can try the app by connecting Metamask to http://localhost:9545 (with Network ID: 5777).  
+The command will generate private keys you can add to Metamask to test your account.  
 Use these keys for development. Never store any mainnet Ether for shared private keys!
 
-In the Truffle Development Console, you can run these commands:
+```
+CTRL+C (twice)
+```
+Exits Truffle console, Create-React-App development server, IPFS Node.
+
+## Truffle Development Console
 
 ```bash
 compile
 ```
-Compiles contracts.
+Compiles contracts and stores JSON artifacts in the src/contracts directory.  
+Artifacts are used by `@truffle/contract` during runtime to get the ABI and load deployed contracts for a given Ethereum network.
 
 ```bash
 migrate
 ```
-Migrates organisation on the selected (local by default) ethereum blockchain.
+Runs migrations on the selected (local by default) ethereum blockchain.
 
 ```bash
 migrate --reset
 ```
 Migrates organisation on the selected (local by default) ethereum blockchain, overwriting previous migrations data.
 
+
+## Environment Variables
+
+```bash
+# Set an Ethereum fallback provider when no wallet is detected.
+export REACT_APP_WEB3_PROVIDER_ENDPOINT=http://localhost:8545
 ```
-CTRL+C
-```
-Exits Truffle console.
+During build, the environment variable `REACT_APP_WEB3_PROVIDER_ENDPOINT` can provide users without an injected wallet a read-only access to an Ethereum network.  
+If the smart contract is deployed on this network, it will be able to fetch the data from IPFS and bootstrap the UI.  
+You can use your own Ethereum node as a fallback provider, or use a service like [Infura](https://infura.io) to host it for you.
 
 ----------------------------
 
 ## License
-Code is available as is, under the very permissive MIT license. You can copy, modify, use and distribute this software without limitations.
-[Read the full License here](./LICENSE.md)
+Code is available as is, under the very permissive MIT license. You can copy, modify, use and distribute this software without limitations.  
+[Read the full License here](./LICENSE.md)  
 
 Authored and maintained by [alxmhe](https://github.com/alxmhe)
 

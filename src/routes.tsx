@@ -1,6 +1,6 @@
 import React from 'react'
-import { HashRouter, Switch, Route, Redirect, useLocation } from 'react-router-dom'
-import { Container } from 'reactstrap'
+import { HashRouter, Switch, Route, Redirect, useLocation, Link } from 'react-router-dom'
+import { Container, Alert } from 'reactstrap'
 import FrontPage from './pages/front'
 import AboutPage from './pages/about'
 import { Header } from './components/header'
@@ -14,6 +14,10 @@ export const AppRouter = () => (
         <div className="flex-shrink-0">
             <Header />
             <Container className="py-5">
+                <Alert color="secondary" className="mb-5">
+                    This demo is for test purposes only. All data and donations are set on the Rinkeby Ethereum Test Network. No real currency is ever exchanged.<br/>
+                    <Link to="/about" className="btn btn-link">Learn more about the purpose of this app.</Link>
+                </Alert>
                 <Switch>
                     <Route exact path="/" component={FrontPage} />
                     <Route exact path="/donate" component={DonationPage} />

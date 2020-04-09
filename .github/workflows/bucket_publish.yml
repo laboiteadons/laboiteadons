@@ -9,6 +9,7 @@ jobs:
       BUCKET_NAME: 'laboiteadons-dapp'
       GENERATE_SOURCEMAP: false
       CI: false
+      REACT_APP_WEB3_PROVIDER_ENDPOINT: ${{ secrets.INFURA_PROVIDER_URL }}
     runs-on: ubuntu-latest
     name: Create a Textile Bucket
     steps:

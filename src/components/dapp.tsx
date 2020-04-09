@@ -1,30 +1,35 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useDApp } from '../dapp'
 import { useWeb3 } from '../ethereum'
 
 export const DAppStatusBox = () => {
   const { availableNetworkIds, loading } = useDApp()
-  const { networkId, selectedAccount, balance } = useWeb3()
-  return !networkId ?
-    <div className="alert alert-warning">
-      You are not connected to Ethereum.
+  const { connected, networkId, selectedAccount, balance, isReadOnlyProvider } = useWeb3()
+  return !connected || !networkId ?
+    <div className="alert alert-danger">
+      You are not connected to Ethereum. <Link to="/about/wallet">Get started with an Ethereum wallet.</Link>
     </div>
-    : !availableNetworkIds.find(i => i === String(networkId)) ?
+    : isReadOnlyProvider ? 
       <div className="alert alert-warning">
-        You are not connected to the correct network. Try connecting to Rinkeby Ethereum Test Network.
+        You need an Ethereum wallet to process donations. <Link to="/about/wallet">Get started with an Ethereum wallet.</Link>
       </div>
-      : !selectedAccount ?
+      : !availableNetworkIds.find(i => i === networkId) ?
         <div className="alert alert-warning">
-          Your wallet is locked.
+          You're not on a valid Ethereum network. Try switching to Rinkeby Ethereum Test Network.
         </div>
-        : loading ?
-          <div className="alert alert-info">
-            Loading
+        : !selectedAccount ?
+          <div className="alert alert-warning">
+            Your Ethereum wallet is locked.
           </div>
-          : (
+          : loading ?
             <div className="alert alert-info">
-              Account: {selectedAccount}<br/>
-              Balance: {balance} ETH
+              Loading...
             </div>
-          )
+            : (
+              <div className="alert alert-info">
+                You're connected with the Ethereum wallet {selectedAccount}<br/>
+                Current balance: {balance} ETH
+              </div>
+            )
 }

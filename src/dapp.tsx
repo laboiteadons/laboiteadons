@@ -50,10 +50,11 @@ export const DAppProvider = (props: any) => {
             // Async load causes and donation contract.
             const initCauses = async () => {
                 // Load contract from Truffle migration artifacts.
+                if (typeof window.web3 === "undefined")
+                    throw new Error("Not connected to Ethereum. You need an Ethereum provider like the Brave Browser (brave.com) or the Metamask Browser Extension for Chrome and Firefox (metamask.io) to access this website.")
                 // @ts-ignore
                 var DAppContract = TruffleContract(LaBoiteADons_Schema)
                 setAvailableNetworkIds(DAppContract.networks ? Object.keys(DAppContract.networks) : [])
-
                 await DAppContract.setProvider(window.web3.currentProvider)
                 await DAppContract.setNetwork(networkId)
                 var _dAppContract = await DAppContract.deployed()

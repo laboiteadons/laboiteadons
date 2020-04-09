@@ -9,14 +9,18 @@ declare global {
   }
 }
 
-export const _web3 = typeof window.web3 !== 'undefined' && new Web3(window.web3.currentProvider)
+export const _web3: any = typeof window.web3 !== 'undefined' && window.web3.currentProvider ?
+  new Web3(window.web3.currentProvider)
+  : process.env.REACT_APP_WEB3_PROVIDER_ENDPOINT &&
+    new Web3(new Web3.providers.HttpProvider(process.env.REACT_APP_WEB3_PROVIDER_ENDPOINT))
+
 window.injectedWeb3 = window.web3
 if (_web3)
   window.web3 = _web3
 
-export const WEB3_REFRESH_ACCOUNTS_INTERVAL = 1000 // 1 second
+export const WEB3_REFRESH_ACCOUNTS_INTERVAL = 2 * 1000 // 2 seconds
 export const WEB3_REFRESH_NETWORK_INTERVAL = 10 * 1000 // 10 seconds
-export const WEB3_REFRESH_ETHEREUM_NOT_FOUND_INTERVAL = 5 * 1000 // 5 seconds
+export const WEB3_REFRESH_ETHEREUM_NOT_FOUND_INTERVAL = 8 * 1000 // 8 seconds
 export const WEB3_REFRESH_ETHEREUM_FOUND_INTERVAL = 20 * 1000 // 20 seconds
 
 export const Web3Context = React.createContext<{
@@ -25,6 +29,7 @@ export const Web3Context = React.createContext<{
   network: string,
   networkId: string,
   balance: string,
+  isReadOnlyProvider: boolean,
   loading: boolean,
   connected: boolean
 }>({
@@ -33,6 +38,7 @@ export const Web3Context = React.createContext<{
   network: "",
   networkId: "0",
   balance: "n/a",
+  isReadOnlyProvider: true,
   loading: false,
   connected: false
 })
@@ -71,7 +77,7 @@ export const Web3Provider = (props: Web3ProviderProps) => {
       _web3 && _web3.currentProvider ?
         _web3.eth.getChainId()
           .catch(() => false)
-          .then(chainId => !!chainId)
+          .then((chainId: string) => !!chainId)
         : Promise.resolve(false)
     )
     .then((_connected: boolean) => {
@@ -109,16 +115,16 @@ export const Web3Provider = (props: Web3ProviderProps) => {
           if (onChangeNetwork)
             onChangeNetwork({
               network: _network,
-              networkId: String(netId)
+              networkId: netId.toString()
             })
           setNetwork({
             name: _network,
-            id: netId
+            id: netId.toString()
           })
         }
       })
-      .catch(e => {
-        console.error("Unable to refresh Ethereum network.", e)
+      .catch((e: Error) => {
+        console.error("Unable to refresh Ethereum network.", e.message)
       })
   }, [network, onChangeNetwork])
 
@@ -151,14 +157,14 @@ export const Web3Provider = (props: Web3ProviderProps) => {
         if (_selectedAccount)
           _web3.eth.getBalance(_selectedAccount)
           .catch(() => "")
-          .then(data => {
+          .then((data: any) => {
             var _balance = data ? window.web3.utils.fromWei(data) : "n/a"
             if (balance !== _balance)
               setBalance(_balance)
           })
       })
-      .catch(e => {
-        console.error("Unable to refresh Ethereum accounts.", e)
+      .catch((e: Error) => {
+        console.error("Unable to refresh Ethereum accounts.", e.message)
       })
   } , [accounts, balance, onChangeAccount, onLogin, onLogout])
 
@@ -173,6 +179,7 @@ export const Web3Provider = (props: Web3ProviderProps) => {
       network: connected ? network.name : "",
       networkId: connected ? network.id : "0",
       balance: connected ? balance : "n/a",
+      isReadOnlyProvider: typeof window.injectedWeb3 === "undefined",
       loading,
       connected
     }}>
