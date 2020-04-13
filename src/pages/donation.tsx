@@ -5,8 +5,10 @@ import { Slice, Donation } from '../types'
 import { DAppStatusBox } from '../components/dapp'
 import { Alert, Media, Row, Col } from 'reactstrap'
 import { useWeb3 } from '../ethereum'
+import { useTranslation } from 'react-i18next'
 
 export const DonationPage = () => {
+    const { t } = useTranslation()
     const { networkId, selectedAccount } = useWeb3()
     const { donate, donations } = useDApp()
     const [sum, setSum] = React.useState<string>("")
@@ -36,7 +38,7 @@ export const DonationPage = () => {
                         <div className="my-3 text-center">
                             {
                                 donating ?
-                                    <Alert className="alert-info">Processing donation.... Please wait for confirmation.</Alert>
+                                    <Alert className="alert-info">{t('Processing donation.... Please wait for confirmation.')}</Alert>
                                     : (
                                         <button className="btn btn-primary" onClick={() => {
                                             if (!selectedAccount)
@@ -49,14 +51,14 @@ export const DonationPage = () => {
                                                 .then((donation: Donation) => setLatestDonation(donation))
                                                 .catch(e => {
                                                     console.error(e)
-                                                    setError("Your transaction was rejected by the smart contract. Try increasing the gas of your transaction in the Metamask window. When sending large distributions, more gas is needed to process it. You can also try several smaller distributions.")
+                                                    setError(t("Your transaction was rejected by the smart contract. Try increasing the gas of your transaction in the Metamask window. When sending large distributions, more gas is needed to process it. You can also try several smaller distributions."))
                                                 })
                                                 .finally(() => setDonating(false))
                                             }
                                             else {
-                                                setError("You didn't set a value to donate.")
+                                                setError(t("You didn't set a value to donate."))
                                             }
-                                        }}>Donate</button>
+                                        }}>{t('Donate')}</button>
                                     )
                             }
                         </div>
@@ -64,7 +66,7 @@ export const DonationPage = () => {
                         {
                             error && (
                                 <Alert className="my-3 alert-danger">
-                                    An error occured, your transaction has not been processed.<br/>
+                                    {t('An error occured, your transaction has not been processed.')}<br/>
                                     {error}
                                 </Alert>
                             )
@@ -75,7 +77,7 @@ export const DonationPage = () => {
             {
                 donationsOnNetwork.length > 0 && (
                     <div>
-                        <h3>History of donations</h3>
+                        <h3>{t('History of donations')}</h3>
                         <div>
                             {
                                 donationsOnNetwork.map((donation: Donation, i: number) => {
@@ -84,7 +86,7 @@ export const DonationPage = () => {
                                         <Media key={i} className="py-4">
                                             <div className="media-body">
                                                 <h5 className="mt-0">{new Date(donation.timestamp).toLocaleString()}</h5>
-                                                <strong>{window.web3.utils.fromWei(donation.weiValue, 'ether')} ETH</strong>
+                                                <strong>{t('{{value}} ETH', { value: window.web3.utils.fromWei(donation.weiValue, 'ether')})}</strong>
                                                 <ul className="list-unstyled">
                                                     {donation.distribution.map((s:Slice, j:number) => (
                                                         <li key={j}>
@@ -95,7 +97,7 @@ export const DonationPage = () => {
                                                         </li>
                                                     ))}
                                                 </ul>
-                                                <a href={`https://rinkeby.etherscan.io/tx/${donation.transaction_hash}`} className={`btn btn-sm ${donation.status === DONATION_CONFIRMED ? "btn-success" : "btn-danger"}`}>Review on Etherscan</a>&nbsp;<button onClick={() => setDistribution(donation.distribution)} className="btn btn-sm btn-primary">Clone donation</button>
+                                                <a href={`https://rinkeby.etherscan.io/tx/${donation.transaction_hash}`} className={`btn btn-sm ${donation.status === DONATION_CONFIRMED ? "btn-success" : "btn-danger"}`}>{t('Review on Etherscan')}</a>&nbsp;<button onClick={() => setDistribution(donation.distribution)} className="btn btn-sm btn-primary">{t('Clone donation')}</button>
                                             </div>
                                         </Media>
                                     )

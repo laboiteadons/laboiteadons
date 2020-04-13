@@ -1,6 +1,6 @@
 import React from 'react'
 import * as TruffleContract from '@truffle/contract'
-import bs58 from 'bs58'
+import CID from 'cids'
 import { useWeb3 } from './ethereum'
 import LaBoiteADons_Schema from './contracts/LaBoiteADons.json'
 import Organ_Schema from './contracts/Organ.json'
@@ -13,6 +13,7 @@ export const DAppContext = React.createContext<{
     causes: Cause[],
     causesOrgan: any, // No type definition for a loaded Truffle contract.
     dAppContract: any,
+    dAppIpfsCid: { v0: string, v1: string },
     ipfsNode: any,
     loading: boolean,
     availableNetworkIds: string[],
@@ -22,6 +23,7 @@ export const DAppContext = React.createContext<{
     causes: [],
     causesOrgan: null,
     dAppContract: null,
+    dAppIpfsCid: {v0:"", v1: ""},
     ipfsNode: null,
     loading: false,
     availableNetworkIds: [], 
@@ -33,6 +35,7 @@ export const DAppProvider = (props: any) => {
     const [donations, setDonations] = React.useState<Donation[]>([])
     const [causes, setCauses] = React.useState<Cause[]>([])
     const [dAppContract, setDAppContract] = React.useState<any>(null)
+    const [dAppIpfsCid, setDAppIpfsCid] = React.useState<{v0: string, v1: string}>({v0:"", v1: ""})
     const [causesOrgan, setCausesOrgan] = React.useState<any>(null)
     const [availableNetworkIds, setAvailableNetworkIds] = React.useState<string[]>([])
     const [loading, setLoading] = React.useState<boolean>(true)
@@ -63,6 +66,27 @@ export const DAppProvider = (props: any) => {
 
                 setDAppContract(_dAppContract)
 
+                var _dAppIpfsCid = await _dAppContract.getWebsite()
+                .then((data: any) => {
+                    if (data.ipfsHash === "0x0000000000000000000000000000000000000000000000000000000000000000")
+                        return ""
+                    var multihash = Buffer.from(
+                        data.hashFunction.toString(16,2) +
+                        data.hashSize.toString(16, 2) +
+                        data.ipfsHash.slice(2),
+                        'hex'
+                    )
+                    // Compute IPFS address from hash data.
+                    // var cidv0 = bs58.encode(multihash)
+                    var cid = new CID(multihash)
+                    return {
+                        v0: cid.toV0().toString(),
+                        v1: cid.toV1().toString()
+                    }
+                })
+                setDAppIpfsCid(_dAppIpfsCid)
+
+
                 // Load causes from Organigram's Organ contract.
                 var causesOrganAddress = await _dAppContract.causesOrganAddress()
                 // @ts-ignore
@@ -91,7 +115,7 @@ export const DAppProvider = (props: any) => {
                                 'hex'
                             )
                             // Compute IPFS address from hash data.
-                            var ipfsCid = bs58.encode(multihash)
+                            var ipfsCid = new CID(multihash).toV1().toString()
                             var metadataUrl = "https://ipfs.io/ipfs/" + ipfsCid
                             var metadata = await fetch(metadataUrl).then(r => r.json())
                             // Create our Cause object.
@@ -107,7 +131,8 @@ export const DAppProvider = (props: any) => {
                                 website: metadata.website,
                                 wikipedia: metadata.wikipedia,
                                 twitter: metadata.twitter,
-                                logo: metadata.logo
+                                logo: metadata.logo,
+                                translations: metadata.translations || {}
                             }
                         })
                     )
@@ -184,6 +209,7 @@ export const DAppProvider = (props: any) => {
             causes,
             causesOrgan,
             dAppContract,
+            dAppIpfsCid,
             ipfsNode: null,
             loading,
             availableNetworkIds,
@@ -198,3 +224,8 @@ export const useDApp = () => React.useContext(DAppContext)
 
 export const withDApp = (ComposedComponent: React.ComponentClass) =>
     (props: any) => <ComposedComponent dapp={useDApp()} {...props} />
+
+export const translateCauseField: (cause: Cause, field: "name"|"description"|"website"|"wikipedia"|"twitter"|"logo", langCode: string) => string = (cause, field, langCode) => (
+    cause.translations && cause.translations[langCode] && cause.translations[langCode][field] ?
+        cause.translations[langCode][field] : cause[field]
+) || ""

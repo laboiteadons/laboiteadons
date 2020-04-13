@@ -1,3 +1,16 @@
+export interface CauseTranslation {
+    name: string|undefined,
+    description: string|undefined,
+    website: string|undefined,
+    wikipedia: string|undefined,
+    twitter: string|undefined,
+    logo: string|undefined
+}
+
+export interface CauseTranslations {
+    [L: string]: CauseTranslation
+}
+
 export interface Cause {
     addr: string,
     ipfsHash: string,
@@ -9,7 +22,8 @@ export interface Cause {
     website: string,
     wikipedia: string,
     twitter: string,
-    logo: string
+    logo: string,
+    translations: CauseTranslations
 }
 
 export interface Slice {

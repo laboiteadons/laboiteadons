@@ -87,6 +87,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: Organ.abi
+      },
+      translations: {
+        "fr": {
+          title: "Administrateurs",
+          description: "Les administrateurs peuvent mettre à jour les contrats et la gouvernance, gérer les Modérateurs, et clore le projet."
+        }
       }
     }),
     JSON.stringify({
@@ -97,6 +103,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: Organ.abi
+      },
+      translations: {
+        "fr": {
+          title: "Modérateurs",
+          description: "Les modérateurs gèrent les campagnes (Causes) accessibles sur la plateforme."
+        }
       }
     }),
     JSON.stringify({
@@ -107,6 +119,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: Organ.abi
+      },
+      translations: {
+        "fr": {
+          title: "Causes",
+          description: "Les Causes sont des adresses de portefeuilles Ethereum et leurs métadonnées associées dans un document JSON."
+        }
       }
     }),
     JSON.stringify({
@@ -117,6 +135,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: nominationProcedure.abi
+      },
+      translations: {
+        "fr": {
+          title: "Nomination de Modérateurs",
+          description: "Les Modérateurs sont nominés par les Administrateurs."
+        }
       }
     }),
     JSON.stringify({
@@ -127,6 +151,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: nominationProcedure.abi
+      },
+      translations: {
+        "fr": {
+          title: "Nomination de Causes",
+          description: "Les Causes sont nominées par les Modérateurs."
+        }
       }
     }),
     JSON.stringify({
@@ -137,6 +167,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: nominationProcedure.abi
+      },
+      translations: {
+        "fr": {
+          title: "Nomination d'Administrateurs",
+          description: "Les Administrateurs sont nominés par les Administrateurs."
+        }
       }
     }),
     JSON.stringify({
@@ -147,6 +183,12 @@ module.exports = async function(deployer, network, accounts) {
       project: PROJECT_METADATA,
       contract: {
         abi: nominationProcedure.abi
+      },
+      translations: {
+        "fr": {
+          title: "Mise à niveau",
+          description: "Les Procédures sont nominées par les Administrateurs."
+        }
       }
     })
   ]))
@@ -280,7 +322,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.msf.org/",
         wikipedia: "https://en.wikipedia.org/wiki/M%C3%A9decins_Sans_Fronti%C3%A8res",
         twitter: "https://twitter.com/msf",
-        logo: "https://upload.wikimedia.org/wikipedia/en/b/bd/Msf_logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/en/b/bd/Msf_logo.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Médecins sans Frontières (MSF)",
+            description: "Médecins sans frontières est une organisation caritative privée à but humanitaire d'origine française et dont le Bureau international siège est à Genève (Suisse). Fondée en 1971, elle offre une assistance médicale d'urgence dans des cas comme les conflits armés, les catastrophes naturelles, les épidémies et les famines. Elle offre aussi des actions à plus long terme lors de conflits prolongés ou d'instabilité chronique, dans le cadre de l'aide aux réfugiés ou à la suite de catastrophes. Elle a reçu le prix Nobel de la paix en 1999.",
+            wikipedia: "https://fr.wikipedia.org/wiki/M%C3%A9decins_sans_fronti%C3%A8res"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) World Wildlife Fund for Nature (WWF)",
@@ -290,7 +339,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.worldwildlife.org/",
         wikipedia: "https://en.wikipedia.org/wiki/World_Wide_Fund_for_Nature",
         twitter: "https://twitter.com/WWF",
-        logo: "https://upload.wikimedia.org/wikipedia/en/2/24/WWF_logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/en/2/24/WWF_logo.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Fonds mondial pour la nature (WWF)",
+            description: "Le WWF est une organisation non gouvernementale internationale (ONGI) créée en 1961, vouée à la protection de l'environnement et au développement durable. C'est l'une des plus importantes ONGI environnementalistes du monde avec plus de six millions de soutiens à travers le monde, travaillant dans plus de cent pays, et soutenant environ 1 300 projets environnementaux.",
+            wikipedia: "https://fr.wikipedia.org/wiki/WWF"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) Amnesty International (AI)",
@@ -300,7 +356,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.amnesty.org/",
         wikipedia: "https://en.wikipedia.org/wiki/Amnesty_International",
         twitter: "https://twitter.com/amnesty",
-        logo: "https://upload.wikimedia.org/wikipedia/en/e/ee/Amnesty_International_logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/en/e/ee/Amnesty_International_logo.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Amnesty International (AI)",
+            description: "Amnesty International, francisé en Amnistie internationale au Canada, est une organisation non gouvernementale internationale qui promeut la défense des droits de l'homme et le respect de la Déclaration universelle des droits de l'homme. L'organisation milite notamment pour la libération des prisonniers d'opinion, le droit à la liberté d'expression, l'abolition de la peine de mort et de la torture et l'arrêt des crimes politiques, mais aussi pour le respect de l'ensemble des droits civils, politiques, économiques, sociaux et culturels.",
+            wikipedia: "https://fr.wikipedia.org/wiki/Amnesty_International"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) Humanity & Inclusion (HI)",
@@ -310,7 +373,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://hi.org/",
         wikipedia: "https://en.wikipedia.org/wiki/Humanity_&_Inclusion",
         twitter: "https://twitter.com/HI_is_hiring",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/Handicap_International_Logo_2018.png"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/Handicap_International_Logo_2018.png",
+        translations: {
+          "fr": {
+            name: "(Démo) Handicap International (HI)",
+            description: "Handicap International est une ONG de solidarité internationale qui intervient dans une soixantaine de pays. L’association intervient dans les situations de pauvreté et d’exclusion, de conflits et de catastrophes aux côtés des personnes handicapées et des populations vulnérables afin : d’améliorer leurs conditions de vie et de promouvoir le respect de leur dignité et de leurs droits fondamentaux ; d’agir et de témoigner, pour que leurs besoins essentiels soient correctement couverts.",
+            wikipedia: "https://fr.wikipedia.org/wiki/Handicap_International"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) Electronic Frontier Foundation (EFF)",
@@ -320,7 +390,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.eff.org/",
         wikipedia: "https://en.wikipedia.org/wiki/Electronic_Frontier_Foundation",
         twitter: "https://twitter.com/eff",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/9/9b/EFF_Logo_2018.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/9/9b/EFF_Logo_2018.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Electronic Frontier Foundation (EFF)",
+            description: "L'EFF travaille à exposer les abus du droit encadrant Internet, organise des actions politiques et de l'envoi de mail en masse, avance des fonds pour la défense dans les procès, apporte son expertise comme amicus curiae, défend les individus et nouvelles technologies contre les menaces abusives de recours en justice, soutient certaines avancées technologiques qui préservent les libertés individuelles, et maintient une base de données et des sites internets indépendants qui relaient des nouvelles et conseils.",
+            wikipedia: "https://fr.wikipedia.org/wiki/Electronic_Frontier_Foundation"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) Bill & Melinda Gates Foundation (BMGF)",
@@ -330,7 +407,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.gatesfoundation.org/",
         wikipedia: "https://en.wikipedia.org/wiki/Bill_%26_Melinda_Gates_Foundation",
         twitter: "https://twitter.com/gatesfoundation",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/6/66/Bill_%26_Melinda_Gates_Foundation_logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/6/66/Bill_%26_Melinda_Gates_Foundation_logo.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Fondation Bill-et-Melinda-Gates (BMGF)",
+            description: "La fondation Bill-et-Melinda-Gates est une fondation américaine humaniste philanthropique créée en janvier 2000. À l’échelle mondiale, ses principaux objectifs sont d’améliorer les soins de santé et de réduire l'extrême pauvreté, alors qu’aux États-Unis, la fondation vise principalement à élargir l'accès à l’éducation et aux technologies de l'information.",
+            wikipedia: "https://fr.wikipedia.org/wiki/Fondation_Bill-et-Melinda-Gates"
+          }
+        }
       }),
       JSON.stringify({
         name: "(Demo) United Nations Children's Fund (UNICEF)",
@@ -340,7 +424,14 @@ module.exports = async function(deployer, network, accounts) {
         website: "https://www.unicef.org/",
         wikipedia: "https://en.wikipedia.org/wiki/UNICEF",
         twitter: "https://twitter.com/UNICEF",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/1/1f/UNICEF_Logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/1/1f/UNICEF_Logo.svg",
+        translations: {
+          "fr": {
+            name: "(Démo) Fonds des Nations unies pour l'enfance (UNICEF)",
+            description: "Le Fonds des Nations unies pour l'enfance est une agence de l'Organisation des Nations unies consacrée à l'amélioration et à la promotion de la condition des enfants. Lors de sa création le 11 décembre 1946, son nom était originellement United Nations International Children's Emergency Fund (Fonds d'urgence international des Nations unies pour l'enfance), dont elle a conservé l'acronyme lors de l'adoption de son nom actuel en 1953, lorsqu'elle est devenue un organe permanent du système des Nations unies.",
+            wikipedia: "https://fr.wikipedia.org/wiki/Fonds_des_Nations_unies_pour_l%27enfance"
+          }
+        }
       })
     ]))
     await Promise.all(

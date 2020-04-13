@@ -1,6 +1,6 @@
 {
   "name": "laboiteadons",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Track, distribute and repeat donations.",
   "private": true,
   "author": "alex <alex@laboiteadons.org>",
@@ -10,6 +10,9 @@
     "@truffle/contract": "^4.1.15",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
+    "i18next": "^19.4.1",
+    "i18next-browser-languagedetector": "^4.0.2",
+    "i18next-xhr-backend": "^3.2.2",
     "ipfs": "^0.42.0",
     "react": "^16.13.1",
     "react-autosuggest": "^10.0.0",
@@ -27,7 +30,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ipfs": "env-cmd jsipfs daemon",
-    "ethereum": "yarn truffle develop"
+    "ethereum": "yarn truffle develop",
+    "ipfsToEthereum": "node scripts/ipfsToEthereum.js",
+    "rinkeby": "env-cmd -f SECRET.env yarn truffle console --network=rinkeby"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,28 +1,32 @@
 import React, { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pie } from 'react-chartjs-2'
 import Autosuggest from 'react-autosuggest'
 import { Slice, Donation, Cause } from '../types'
 import { Alert, Col, Row } from 'reactstrap'
-import { useDApp } from '../dapp'
+import { useDApp, translateCauseField } from '../dapp'
 import './autosuggest.css'
 
 export const DonationInput: React.FC<{
     sum: string,
     setSum: (arg0: string) => void
-}> = React.memo(({ sum, setSum }) => (
-    <div className="card">
-        <div className="card-body">
-            <div className="card-text">
-                <div className="input-group">
-                    <label>
-                        Enter the amount to donate (ETH):
-                        <input name="sum" type="text" value={sum} onChange={e => setSum(e.target.value)} className="form-control" />
-                    </label>
+}> = React.memo(({ sum, setSum }) => {
+    const { t } = useTranslation()
+    return (
+        <div className="card">
+            <div className="card-body">
+                <div className="card-text">
+                    <div className="input-group">
+                        <label>
+                            {t('Amount to donate (ETH)')}
+                            <input name="sum" type="text" value={sum} onChange={e => setSum(e.target.value)} className="form-control" />
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-))
+    )
+})
 
 export const DistributionPie: React.FC<{ distribution: Slice[] }> = React.memo(({ distribution }) => {
     if (distribution.length === 0)
@@ -44,13 +48,14 @@ export const DistributionPie: React.FC<{ distribution: Slice[] }> = React.memo((
 })
 
 export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, list: Cause[] }> = ({ onSelect, list }) => {
+    const { t, i18n: { language }} = useTranslation()
     const [searchValue, setSearchValue] = React.useState<string>("")
     const [suggestions, setSuggestions] = React.useState<Cause[]>([])
     
     const getSuggestions: (value: string) => Cause[] = (value: string) => {
         value = value.trim().toLowerCase()
         return value.length > 0 ?
-            list.filter((c: Cause) => c.name.toLowerCase().search(value) >= 0)
+            list.filter((c: Cause) => translateCauseField(c, "name", language).toLowerCase().search(value) >= 0)
             : []
     }
 
@@ -59,10 +64,10 @@ export const DistributionAutosuggest : React.FC<{ onSelect: (c: Cause) => void, 
             suggestions={suggestions}
             onSuggestionsFetchRequested={(p: {value: string}) => setSuggestions(getSuggestions(p.value))}
             onSuggestionsClearRequested={() => setSuggestions([])}
-            getSuggestionValue={(s: Cause) => s.name}
-            renderSuggestion={(s: Cause) => <div>{s.name}</div>}
+            getSuggestionValue={(s: Cause) => translateCauseField(s, "name", language)}
+            renderSuggestion={(s: Cause) => <div>{translateCauseField(s, "name", language)}</div>}
             inputProps={{
-                placeholder: "Find a cause by name",
+                placeholder: t("Find a cause by name"),
                 value: searchValue,
                 onChange: (e: any, d: Autosuggest.ChangeEvent) => setSearchValue(d.newValue)
             }}
@@ -103,6 +108,7 @@ export const DistributionSlices: React.FC<{
     setDistribution: (d: Slice[]) => void,
     cloneLatestDonation: (()=>void)|null|undefined
 }> = ({ distribution, setDistribution, cloneLatestDonation }) => {
+    const { t } = useTranslation()
     return distribution.length > 0 ? (
         <ul className="list-unstyled">
         {
@@ -125,9 +131,9 @@ export const DistributionSlices: React.FC<{
         </ul>
     ) : (
         <>
-            <p>Start by adding causes to your distribution...</p>
+            <p>{t('Start by adding causes to your distribution...')}</p>
             {
-                cloneLatestDonation && <button className="btn btn-primary" onClick={cloneLatestDonation}>Or clone your latest donation</button>
+                cloneLatestDonation && <button className="btn btn-primary" onClick={cloneLatestDonation}>{t('Or clone your latest donation')}</button>
             }
         </>
     )
@@ -138,11 +144,12 @@ export const DistributionInput: React.FC<{
     setDistribution: (arg0: Slice[]) => void
     cloneLatestDistribution: (()=>void)|null|undefined
 }> = ({ distribution, setDistribution, cloneLatestDistribution }) => {
+    const { i18n: { language } } = useTranslation()
     const { causes } = useDApp()
     const onSelect = (c: Cause) => {
         setDistribution([...distribution, {
             addr: c.addr,
-            name: c.name,
+            name: translateCauseField(c, "name", language),
             shares: 100,
             causeCid: c.ipfsCid
         }])
@@ -163,11 +170,14 @@ export const DistributionInput: React.FC<{
     )
 }
         
-export const DonationSuccessBox: React.FC<{donation: Donation}> = React.memo(({ donation }) => (
-    <Alert className="alert-success">
-        <h5>Your donation has been processed!</h5>
-        <a href={`https://rinkeby.etherscan.io/tx/${donation.transaction_hash}`} target="_blank" rel="noreferrer noopener" className="btn btn-primary">
-            Review your transaction on Etherscan
-        </a>
-    </Alert>
-))
+export const DonationSuccessBox: React.FC<{donation: Donation}> = React.memo(({ donation }) => {
+    const { t } = useTranslation()
+    return (
+        <Alert className="alert-success">
+            <h5>{t('Your donation has been processed!')}</h5>
+            <a href={`https://rinkeby.etherscan.io/tx/${donation.transaction_hash}`} target="_blank" rel="noreferrer noopener" className="btn btn-primary">
+                {t('Review your transaction on Etherscan')}
+            </a>
+        </Alert>
+    )
+})

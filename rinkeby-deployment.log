@@ -1,82 +1,84 @@
+Governance deployed.
 {
-  LaBoiteADons: "0xFfeBbE71Ada46D735943feb911De77d2b0b34EcF",
   Admins: {
-    address: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0',
+    address: '0xbf4D3288D96541CeB3102B25801E01946A763a9e',
     procedures: {
-      '0xA7431580dFd46A1D92BC558598dD9EA498de5cCe': '12',
-      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+      '0xB00b9e59Ef776Ce27E7047BfBC30a7fbb5cAca58': '12',
+      '0x7b716DF6017f00167995EBA2243C1011AB3B178e': '192'
     },
     entries: [ '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8' ],
     organData: {
       owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
-      metadataIpfsHash: '0xdcdbd89c1f3ee5b6a46fa416e3dc311fdc77b52886d4fb7e115c01e57117840a',
+      metadataIpfsHash: '0xccc5fc519863eb424b1fd18d62ef341f316998e13ff6e6419ef4f0552cc6a5f9',
       metadataIpfsFunction: '18',
       metadataIpfsSize: '32',
       entriesCount: '1',
       proceduresCount: '2'
     },
-    metadata: 'QmdCnqSpih3iwt4wLTZSNDcbYCUd2Gwaf8XJU4q8FdemwP'
+    metadata: 'Qmc7zykqw1eSfxPowk6tARAJHm2BqCjDsziepFGFcWqYBi'
   },
   Moderators: {
-    address: '0x737C4A0CD82eb46E42517c529B2099BbaAd55037',
+    address: '0x7fff77Ae4D01C549c42981c78e8FEC3Ad75614B9',
     procedures: {
-      '0x547dAB208541a3775F4eb70EAdbb6F08dc4E384A': '12',
-      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+      '0xE4f4930976992fA02afDaf817e7C8d83aa81e6c6': '12',
+      '0x7b716DF6017f00167995EBA2243C1011AB3B178e': '192'
     },
     entries: [ '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8' ],
     organData: {
       owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
-      metadataIpfsHash: '0xa673d240392bc9c8c191438217627366ff5f1a551652198e2f81396fcaa7281f',
+      metadataIpfsHash: '0x077c0e4a267d15b41281acf43a5f8e39c69a213dc613f65fc7f4af3e7269c968',
       metadataIpfsFunction: '18',
       metadataIpfsSize: '32',
       entriesCount: '1',
       proceduresCount: '2'
     },
-    metadata: 'QmZYQpXksxdQEGcmhevJsZYLv8c1reD41am7X9biHezVWe'
+    metadata: 'QmNqsH8sGspva7RT51MGeH1BcsBegaK7CsZYiuyGfrCcKZ'
   },
   Causes: {
-    address: '0x6064D785351A5c2533559068574e9F9Bf5F1d1B3',
+    address: '0x21c78129dD4c48Eaaf7f64dddBa900848A06Ec80',
     procedures: {
-      '0x4eD5F12B4535B63d377357A8952DfbDD99C2dF49': '12',
-      '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308': '192'
+      '0xBB963894401C3249C7053721E36300B776F1E80f': '12',
+      '0x7b716DF6017f00167995EBA2243C1011AB3B178e': '192'
     },
     entries: [
-      '0x7873953e61Fc86Ac8d712aD61E15A1CDa3EC2F3C',
-      '0x911D29F25a93d198f619a7E7e2849cE6CE7E3D99',
+      '0x34D64036De882e88F92e18f6bdb87f7Bfc4e522A',
       '0x5CD5Cb664E14756b85A4B90081b7447188aa598B',
       '0xCC3113635Fdd9aE4EC87C56ad580150ae8BCD0A0',
-      '0xaB8A748a8EeA5737Eb5b6675D1a133aF6B82C6cB',
-      '0x34D64036De882e88F92e18f6bdb87f7Bfc4e522A',
-      '0x66d66aF1328d6793Eb805824b8D0491753BA2fa8'
+      '0x66d66aF1328d6793Eb805824b8D0491753BA2fa8',
+      '0x911D29F25a93d198f619a7E7e2849cE6CE7E3D99',
+      '0x7873953e61Fc86Ac8d712aD61E15A1CDa3EC2F3C',
+      '0xaB8A748a8EeA5737Eb5b6675D1a133aF6B82C6cB'
     ],
     organData: {
       owner: '0x7EE3E7EEE078C1479770d1BFFa4c069De97F79f8',
-      metadataIpfsHash: '0xbef43cbbb41181c119122821fb6a6e0679534c8917d99ddc212a196856189980',
+      metadataIpfsHash: '0x563e039bc4f90e3f8556c2f6e31d1cb6a143d33158a3e765d55f98ae93a653db',
       metadataIpfsFunction: '18',
       metadataIpfsSize: '32',
       entriesCount: '7',
       proceduresCount: '2'
     },
-    metadata: 'QmbC4BCtbaXAnd9oj5o3emdWkqofgbbvCttSiNmDs6gAes'
+    metadata: 'QmU9JckGJPY63Ugkcog2DAW6k7rLZCepGL3EeVfeBWG9YE'
   },
   CausesNomination: {
-    address: '0x4eD5F12B4535B63d377357A8952DfbDD99C2dF49',
-    metadata: 'QmbBgKU1uf93Qu9YpXEASUGF7AWEHmdaWgoFA3Kv1XQ8BQ',
-    authorizedNominatersOrgan: '0x737C4A0CD82eb46E42517c529B2099BbaAd55037'
+    address: '0xBB963894401C3249C7053721E36300B776F1E80f',
+    metadata: 'QmcEHam5ZaLYdpSKkXXUAX14dY6qZbT37GfQ3P4im96gcP',
+    authorizedNominatersOrgan: '0x7fff77Ae4D01C549c42981c78e8FEC3Ad75614B9'
   },
   ModeratorsNomination: {
-    address: '0x547dAB208541a3775F4eb70EAdbb6F08dc4E384A',
-    metadata: 'QmcYQhzKPn1WhG8HsHZCMkGVR1KWYUgWAGCba3M7cRSKYV',
-    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+    address: '0xE4f4930976992fA02afDaf817e7C8d83aa81e6c6',
+    metadata: 'QmPJtKoRbV58oWZsDXvHY2AxpCTGBnaooRVeRC4Yx6Lxrp',
+    authorizedNominatersOrgan: '0xbf4D3288D96541CeB3102B25801E01946A763a9e'
   },
   AdminsNomination: {
-    address: '0xA7431580dFd46A1D92BC558598dD9EA498de5cCe',
-    metadata: 'QmZZEryHvXHhtQRgtxZsFenmXcK78ahHpJvqZcbbeyCFzR',
-    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+    address: '0xB00b9e59Ef776Ce27E7047BfBC30a7fbb5cAca58',
+    metadata: 'QmRr6g6hs6wcaxJzWFfjq34zAVBy1kH8pRRyDve9JNwi8h',
+    authorizedNominatersOrgan: '0xbf4D3288D96541CeB3102B25801E01946A763a9e'
   },
   Upgrade: {
-    address: '0x9AA8B0A147ba3581ED7D5248789E5582d6B69308',
-    metadata: 'QmP8VvpbK84aM8Yv8SEfH6qyQR56nNspbAzwpPDAmFYGRP',
-    authorizedNominatersOrgan: '0x2cBA38d85d6f5d03C9605cFe7798D13873F0a7A0'
+    address: '0x7b716DF6017f00167995EBA2243C1011AB3B178e',
+    metadata: 'QmfVNHbrZjWqr3knx8PesDNGaiyuttGympNWGB8WZ12FdG',
+    authorizedNominatersOrgan: '0xbf4D3288D96541CeB3102B25801E01946A763a9e'
   }
 }
+
+LaBoiteADons deployed at 0xf28570071777b7C01F90B33dD6445B40BDDb78e6

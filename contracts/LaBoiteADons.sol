@@ -10,10 +10,16 @@ contract LaBoiteADons {
 
   address public owner;
   address public causesOrganAddress;
+  bytes32 websiteIpfsHash;
+  uint8 websiteHashFunction;
+  uint8 websiteHashSize;
 
   constructor(address _causesOrganAddress) public {
     owner = msg.sender;
     causesOrganAddress = _causesOrganAddress;
+    websiteIpfsHash = 0x0;
+    websiteHashFunction = 0;
+    websiteHashSize = 0;
   }
 
   modifier restricted() {
@@ -51,6 +57,20 @@ contract LaBoiteADons {
       causes[i].transfer(payment);
       emit donated(causes[i], payment);
     }
+  }
+
+  function getWebsite()
+    public view returns (bytes32 ipfsHash, uint8 hashFunction, uint8 hashSize)
+  {
+    return (websiteIpfsHash, websiteHashFunction, websiteHashSize);
+  }
+
+  function setWebsite(bytes32 _ipfsHash, uint8 _hashFunction, uint8 _hashSize)
+    external restricted
+  {
+    websiteIpfsHash = _ipfsHash;
+    websiteHashFunction = _hashFunction;
+    websiteHashSize = _hashSize;
   }
 
   function setCausesOrgan(address _causesOrganAddress)

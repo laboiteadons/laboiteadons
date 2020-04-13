@@ -1,17 +1,43 @@
 import React from 'react'
 import { Switch, Route, Redirect, NavLink, useRouteMatch, Link } from 'react-router-dom'
-import { NavItem, Container, Nav } from 'reactstrap'
+import { NavItem, Container, Nav, Card, CardBody, CardHeader } from 'reactstrap'
+import { useTranslation, Trans } from 'react-i18next'
+import { useDApp } from '../dapp'
+
+export const CurrentIpfsInfos = () => {
+  const { t } = useTranslation()
+  const { dAppIpfsCid } = useDApp()
+  if (!dAppIpfsCid || !dAppIpfsCid.v0 || !dAppIpfsCid.v1)
+    return null
+  return (
+    <Card className="my-3">
+        <CardHeader>
+          {t('Current IPFS Informations')}
+        </CardHeader>
+      <CardBody>
+        <div className="mb-2">
+          CID v0: <code>{dAppIpfsCid.v0}</code><br/>
+          CID v1: <code>{dAppIpfsCid.v1}</code>
+        </div>
+        <a href={`https://gateway.ipfs.io/ipfs/${dAppIpfsCid.v0}`} target="_blank" rel="noreferrer noopener" className="btn btn-sm btn-secondary mr-2">{t('IPFS.io Gateway')}</a>
+        <a href={`https://gateway.pinata.cloud/ipfs/${dAppIpfsCid.v0}`} target="_blank" rel="noreferrer noopener" className="btn btn-sm btn-secondary mr-2">{t('Pinata Gateway')}</a>
+        <a href={`https://${dAppIpfsCid.v1}.cf-ipfs.com`} target="_blank" rel="noreferrer noopener" className="btn btn-sm btn-secondary mr-2">{t('Cloudflare Gateway')}</a>
+      </CardBody>
+    </Card>
+  )
+}
 
 export const AboutPage = () => {
+  const { t } = useTranslation()
   const { path } = useRouteMatch()
   return (
     <Container>
       <Nav tabs>
-        <NavItem><NavLink to={`${path}/us`} className="nav-link">Us</NavLink></NavItem>
-        <NavItem><NavLink to={`${path}/blockchain`} className="nav-link">Ethereum Blockchain</NavLink></NavItem>
-        <NavItem><NavLink to={`${path}/hosting`} className="nav-link">IPFS Hosting</NavLink></NavItem>
-        <NavItem><NavLink to={`${path}/governance`} className="nav-link">Organigr.am Governance</NavLink></NavItem>
-        <NavItem><NavLink to={`${path}/wallet`} className="nav-link">Getting a Wallet</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/us`} className="nav-link">{t('Us')}</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/blockchain`} className="nav-link">{t('Ethereum Blockchain')}</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/hosting`} className="nav-link">{t('IPFS Hosting')}</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/governance`} className="nav-link">{t('Organigr.am Governance')}</NavLink></NavItem>
+        <NavItem><NavLink to={`${path}/wallet`} className="nav-link">{t('Getting a Wallet')}</NavLink></NavItem>
       </Nav>
       <div className="mt-5">
         <Switch>
@@ -28,7 +54,7 @@ export const AboutPage = () => {
 }
 
 export const AboutUsPage = React.memo(() => (
-  <>
+  <Trans i18nKey="aboutUsPage">
     <h2>About La Boîte à Dons</h2>
     <p className="lead">Track, distribute and repeat donations.</p>
     <p>
@@ -46,7 +72,7 @@ export const AboutUsPage = React.memo(() => (
       When creating a Donation, you are sending Test Ether to several wallets. These wallets are not associated with real active Causes and, even though the Test Ether has no value, you do not need to send a lot of it to test the App and its Governance.
     </p>
     <p>
-      The App is deployed on Rinkeby Ethereum Test Network, you can get Test Ether in the <a href="https://faucet.rinkeby.io/" target="_blank" rel="noopener noreferrer">Rinkeby Authenticated Faucet</a>. We recommend creating an Etherum Wallet dedicated to the purpose of testing this app, to keep your online identities separated. (Never store real Ether in a test Wallet!)<br/>
+      The App is deployed on Rinkeby Ethereum Test Network, you can get Test Ether in the <a href="https://faucet.rinkeby.io/" target="_blank" rel="noopener noreferrer">Rinkeby Authenticated Faucet</a>. We recommend creating an Ethereum Wallet dedicated to the purpose of testing this app, to keep your online identities separated. (Never store real Ether in a test Wallet!)<br/>
       Learn more about Ethereum Wallets and how to get one on <a href="https://ethereum.org/wallets/" target="_blank" rel="noopener noreferrer">Ethereum's official page</a>, or get the <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">Metamask Browser Extension</a> now.
     </p>
 
@@ -55,22 +81,11 @@ export const AboutUsPage = React.memo(() => (
       The app is fully decentralized, in the sense that no individual or corporation can control, censor or track users or their datas. You don't even need an account to use the app!<br/>
       An underlying organisation has the authority to add and remove causes, and update contracts. Anyone can join the organisation and adapt it from the democratic framework already chosen by the community.
     </p>
-
-    <h3>Notifications</h3>
-    <p>
-      The app is unable to process payments for the user without his direct consent as an Ethereum transaction signature. In order to donate every month, users need to open the app and create new transactions themselves.
-    </p>
-    <p>
-      To make transactions cyclical, we implement a basic (although secure) email notifications server (centralized) on the side. You can register your email to receive our newsletter on https://laboiteadons.org. It will be sent once every month, act as a reminder, and share with you updates on the service and features.
-    </p>
-    <p>
-      Your email address or any other data you share with us are never used or shared outside of this newsletter. This service is not mandatory and, of course, you can create reminders any way you like.
-    </p>
-  </>
+  </Trans>
 ))
 
 export const AboutEthereumPage = React.memo(() => (
-  <>
+  <Trans i18nKey="aboutEthereumPage">
     <h2>About Ethereum</h2>
     <p className="lead">
       Ethereum is a public globally distributed and decentralized blockchain protocol.
@@ -116,11 +131,11 @@ export const AboutEthereumPage = React.memo(() => (
       Then, if everything is valid, it processes every outgoing transactions one by one. The contract never stores funds itself.<br/>
       On failure, funds are transferred back to the sender's wallet.
     </p>
-  </>
+  </Trans>
 ))
 
 export const AboutIPFSPage = React.memo(() => (
-  <>
+  <Trans i18nKey="aboutIPFSPage">
     <h2>About IPFS</h2>
     <p className="lead">
       The InterPlanetary File System (IPFS) is a globally distributed peer-to-peer file system.
@@ -138,21 +153,23 @@ export const AboutIPFSPage = React.memo(() => (
       We then consider that, as long as the file is available on the IPFS Network (as long as at least 1 computer is sharing this file), its integrity is proven.
     </p>
     <p>
-      The frontend of La Boîte à Dons, which is the website you're currently browsing, is also stored on IPFS, making it faster to retrieve, resilient against censorship, and existing only because several people want it to exist.<br/>
+      The frontend of La Boîte à Dons, which is the website you're currently browsing, is also stored on IPFS, making it faster to retrieve, resilient against censorship, and available as long as at least one node shares it.<br/>
       The domain name is pointing to Cloudflare free IPFS gateway, but the exact same website is available by visiting the IPFS hash with any IPFS gateway, even one hosted locally.<br/>
-      The website is hosted on a <a href="https://blog.textile.io/tag/buckets/" target="_blank" rel="noopener noreferrer">Textile Bucket</a>, a service providing automatic IPFS hosting when pushing changes to the code repository.
+      The website is hosted on a <a href="https://blog.textile.io/tag/buckets/" target="_blank" rel="noopener noreferrer">Textile Bucket</a>, a service providing automatic IPFS hosting when pushing changes to the code repository, and replicated at least once with <a href="https://pinata.cloud/" target="_blank" rel="noopener noreferrer">Pinata</a>.
     </p>
+
+    <CurrentIpfsInfos />
 
     <h3>(Coming soon) Backing up La Boîte à Dons</h3>
     <p>
-      When you browser the website, you run your own IPFS node in the browser and automatically pin the metadata files and the website code, effectively making the service more resilient and the website faster to load for everybody.<br/>
+      When browsing the website, you run your own IPFS node in the browser and automatically pin the metadata files and the website code, effectively making the service more resilient and the website faster to load for everybody.<br/>
       If you want to help other people access the website, simply keep it running, or pin the files in your own IPFS node.
     </p>
-  </>
+  </Trans>
 ))
 
 export const AboutOrganigramPage = React.memo(() => (
-  <>
+  <Trans i18nKey="aboutOrganigramPage">
     <h2>About Organigr.am</h2>
     <p className="lead">
       Organigr.am provides Organisations-as-a-Service by letting users draw their organigrams and deploy their Organs and Procedures on a blockchain platform.
@@ -172,13 +189,13 @@ export const AboutOrganigramPage = React.memo(() => (
     </p>
     <p>
       Currently, the organisation has 2 other Organs : Moderators, who can add and remove causes, and Administrators, who can add and remove Moderators, and update the system.<br/>
-      You can browse and interact with the Organs through their available procedures on any Organigr.am client, or <a href="https://ethereum.org" target="_blank" rel="noopener noreferrer">https://organigr.am/org/laboiteadons</a>.
+      You can browse and interact with the Organs through their available procedures on any Organigr.am client, or <a href="https://organigr.am/org/laboiteadons" target="_blank" rel="noopener noreferrer">https://organigr.am/org/laboiteadons</a>.
     </p>
-  </>
+  </Trans>
 ))
 
 export const AboutWalletPage = React.memo(() => (
-  <>
+  <Trans i18nKey="aboutWalletPage">
     <h2>Getting started with a Wallet</h2>
     <p>Whether you decide to go with <a href="https://www.brave.com" target="_blank" rel="noreferrer noopener">Brave Browser</a> (we &lt;3 Brave) or the <a href="https://www.metamask.io" target="_blank" rel="noreferrer noopener">Metamask Browser Extension</a> for Chrome and Firefox, the steps to get started are very similar.</p>
     <p>Once installed, go to the <strong>"Crypto Wallets" window</strong>  (by clicking on the metamask extension icon, or in your browser settings) and "create a new local wallet".</p>
@@ -191,7 +208,7 @@ export const AboutWalletPage = React.memo(() => (
     <p>
       <Link to="/donate" className="btn btn-primary">Try the app</Link>
     </p>
-  </>
+  </Trans>
 ))
 
 export default AboutPage

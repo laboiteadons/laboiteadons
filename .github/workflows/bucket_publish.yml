@@ -6,7 +6,7 @@ on:
 jobs:
   bucket_publish:
     env:
-      BUCKET_NAME: 'laboiteadons-dapp'
+      BUCKET_NAME: 'laboiteadons-dapp-prod'
       GENERATE_SOURCEMAP: false
       CI: false
       REACT_APP_WEB3_PROVIDER_ENDPOINT: ${{ secrets.INFURA_PROVIDER_URL }}

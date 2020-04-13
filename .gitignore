@@ -24,3 +24,4 @@ yarn-error.log*
 
 # development data files
 /data
+/SECRET.env

@@ -115,6 +115,14 @@ CTRL+C (twice)
 ```
 Exits Truffle console, Create-React-App development server, IPFS Node.
 
+```
+# IPFS CID v0
+yarn ipfsToEthereum Qmc7zykqw1eSfxPowk6tARAJHm2BqCjDsziepFGFcWqYBi
+# IPFS CID v1
+yarn ipfsToEthereum bafybeigmyx6fdgdd5nbewh6rrvro6na7gfuzryj763tedhxu6bkszrvf7e
+```
+Utility function to turn an IPFS hash into a multihash you can send in an Ethereum smart contract transaction.
+
 ## Truffle Development Console
 
 ```bash
