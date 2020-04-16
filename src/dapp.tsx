@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import * as TruffleContract from '@truffle/contract'
 import CID from 'cids'
 import { useWeb3 } from './ethereum'
@@ -31,6 +32,7 @@ export const DAppContext = React.createContext<{
 })
 
 export const DAppProvider = (props: any) => {
+    const { t } = useTranslation()
     const { network, networkId, selectedAccount, loading: web3Loading } = useWeb3()
     const [donations, setDonations] = React.useState<Donation[]>([])
     const [causes, setCauses] = React.useState<Cause[]>([])
@@ -54,7 +56,7 @@ export const DAppProvider = (props: any) => {
             const initCauses = async () => {
                 // Load contract from Truffle migration artifacts.
                 if (typeof window.web3 === "undefined")
-                    throw new Error("Not connected to Ethereum. You need an Ethereum provider like the Brave Browser (brave.com) or the Metamask Browser Extension for Chrome and Firefox (metamask.io) to access this website.")
+                    throw new Error(t("Not connected to Ethereum. You need an Ethereum provider like the Brave Browser (brave.com) or the Metamask Browser Extension for Chrome and Firefox (metamask.io) to use this app."))
                 // @ts-ignore
                 var DAppContract = TruffleContract(LaBoiteADons_Schema)
                 setAvailableNetworkIds(DAppContract.networks ? Object.keys(DAppContract.networks) : [])
@@ -62,7 +64,7 @@ export const DAppProvider = (props: any) => {
                 await DAppContract.setNetwork(networkId)
                 var _dAppContract = await DAppContract.deployed()
                 if (!_dAppContract.address)
-                    throw new Error("LaBoiteADons contract not found on this network.")
+                    throw new Error(t("LaBoiteADons contract not found on this Ethereum network."))
 
                 setDAppContract(_dAppContract)
 
@@ -95,7 +97,7 @@ export const DAppProvider = (props: any) => {
                 await Organ.setNetwork(networkId)
                 var _causesOrgan = await Organ.at(causesOrganAddress)
                 if (!_causesOrgan)
-                    throw new Error('Causes Organ not found.')
+                    throw new Error(t('Causes Organ not found.'))
 
                 setCausesOrgan(_causesOrgan)
 
@@ -116,7 +118,7 @@ export const DAppProvider = (props: any) => {
                             )
                             // Compute IPFS address from hash data.
                             var ipfsCid = new CID(multihash).toV1().toString()
-                            var metadataUrl = "https://ipfs.io/ipfs/" + ipfsCid
+                            var metadataUrl = "https://cloudflare-ipfs.com/ipfs/" + ipfsCid
                             var metadata = await fetch(metadataUrl).then(r => r.json())
                             // Create our Cause object.
                             return metadata.name && {
@@ -150,25 +152,25 @@ export const DAppProvider = (props: any) => {
             if (!web3Loading)
                 mounted.current = false
         }
-    }, [networkId, web3Loading])
+    }, [networkId, web3Loading, t])
 
     /**
      * Donate function verifies inputs and triggers an Ethereum transaction.
      */
     const donate = React.useCallback(async (distribution: Slice[], weiValue: number) => {
         if (!selectedAccount || !network)
-            throw new Error("No valid Ethereum connexion.")
+            throw new Error(t("No valid Ethereum connexion."))
         if (!dAppContract || !dAppContract.address)
-            throw new Error("LaBoiteADons contract not found.")
+            throw new Error(t("LaBoiteADons contract not found."))
 
         // Check distribution is legit.
         var totalShares = 0
         distribution.forEach((slice: Slice, i: number) => {
             if (slice.shares <= 0)
-                throw new Error("Distribution error: Missing cause ratio.")
+                throw new Error(t("Distribution error: Missing cause ratio."))
             var cause = causes.find(c => c.addr === slice.addr)
             if (!cause)
-                throw new Error("Distribution error: Missing cause address.")
+                throw new Error(t("Distribution error: Missing cause address."))
             distribution[i].causeCid = cause.ipfsCid
             distribution[i].name = cause.name
             totalShares += slice.shares
@@ -201,7 +203,7 @@ export const DAppProvider = (props: any) => {
         setDonations(_donations)
 
         return donation
-    }, [network, causes, networkId, selectedAccount, dAppContract, donations])
+    }, [network, causes, networkId, selectedAccount, dAppContract, donations, t])
     
     return (
         <DAppContext.Provider value={{

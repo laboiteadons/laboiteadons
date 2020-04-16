@@ -1,38 +1,29 @@
 import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
 import {
-    Collapse,
     Container,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
-    Nav,
-    NavItem
+    Alert
 } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const Header = React.memo(() => {
-    const { t } = useTranslation()
-    const [isOpen, setIsOpen] = React.useState(false)
+    const { t } = useTranslation()
     return (
-        <Navbar color="secondary" dark expand="md">
-            <Container>
-                <NavbarBrand tag={Link} to="/">La Boîte à Dons</NavbarBrand>
-                    <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
-                    <Collapse isOpen={isOpen} navbar>
-                        <Nav className="mr-auto" navbar>
-                            <NavItem>
-                                <NavLink to="/donate" className="nav-link">{t('Donate')}</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink to="/causes" className="nav-link">{t('Causes')}</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink to="/about" className="nav-link">{t('About')}</NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-            </Container>
-        </Navbar>
+        <>
+            <Navbar color="secondary" dark expand="md">
+                <Container>
+                    <NavbarBrand to="https://laboiteadons.org">La Boîte à Dons</NavbarBrand>
+                </Container>
+            </Navbar>
+            <Alert color="warning">
+                <Container>
+                    <Trans t={t}>
+                        This app is for test purposes only, no real currency is exchanged.&nbsp;
+                        <a href="https://github.com/laboiteadons/laboiteadons/wiki" target="_blank" rel="noreferrer noopener">Discover the purpose of this app in the Wiki.</a>
+                    </Trans>
+                </Container>
+            </Alert>
+        </>
     )
 })
