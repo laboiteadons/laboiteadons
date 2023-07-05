@@ -1,3 +1,11 @@
+```
+This repository has been archived. There is currently no plan to start the project again.  
+Organigram, which this project relied on to manage the list of organizations that could receive donations in a decentralized registry, does not provide a JS client anymore.  
+You can still explore the code and the wiki to learn about the Web3 development of a fully-decentralized application.
+```
+  
+------    
+  
 # La Boîte à Dons
 https://laboiteadons.org  
 Track, distribute and repeat donations.
